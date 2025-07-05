@@ -21,6 +21,10 @@ export const requests: Record<string, RequestFn> = {
         ({
             method: 'GET',
             url: getApiUrl('/api/ping'),
-        })
+        }),
+    getNetworkInformation: () => ({
+        method: 'GET',
+        url: getApiUrl('/api/network-information'),
+    })
 }
 

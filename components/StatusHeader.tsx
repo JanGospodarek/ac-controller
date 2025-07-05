@@ -1,29 +1,23 @@
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Text} from "@ui-kitten/components";
-import {ConnectionStatus} from "@/enums/common";
+import useGetRequest from "@/hooks/useGetRequest";
+import {RequestResponse, requests} from "@/constants/requests";
 
-type StatusHeaderProps = {
-    data?: {
-        connectionStatus: ConnectionStatus;
-        wifiName: string;
-        ipAddress: string;
-    }
-};
+const StatusHeader = () => {
 
-const StatusHeader = ({data}: StatusHeaderProps) => {
-    const statusColor = data?.connectionStatus === ConnectionStatus.ONLINE ? "#4CAF50" : "#FF3D71";
+    const {data} = useGetRequest<RequestResponse<{ ipAddress: string }>>({
+        requestFn: requests.getNetworkInformation,
+    })
+    const statusColor = data ? "#4CAF50" : "#FF3D71";
 
     return (
         <View style={styles.container}>
             <Text category="s1" style={[styles.status, {color: statusColor}]}>
-                {data?.connectionStatus === ConnectionStatus.ONLINE ? "Połączono" : "Brak połączenia"}
+                {data ? "Połączono" : "Brak połączenia"}
             </Text>
-            {data?.wifiName && <Text appearance="hint" category="c1">
-                Sieć: {data.wifiName}
-            </Text>}
-            {data?.ipAddress && <Text appearance="hint" category="c1">
-                IP: {data.ipAddress}
+            {data?.data?.ipAddress && <Text appearance="hint" category="c1">
+                IP Kontrolera: {data.data.ipAddress}
             </Text>}
 
         </View>
