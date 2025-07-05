@@ -11,14 +11,13 @@ const useGetRequest = <T = any>({requestFn, fetchOnMount = true}: Props<T>) => {
     const [error, setError] = useState<unknown>(null);
     const [loading, setLoading] = useState(true);
 
-    const fetchData = useCallback(() => async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const request = requestFn();
             const response = await fetch(request.url, {
                 ...request,
             });
-
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
             }
@@ -27,6 +26,7 @@ const useGetRequest = <T = any>({requestFn, fetchOnMount = true}: Props<T>) => {
             setData(rsp);
 
         } catch (error) {
+            console.error(error);
             setError(error);
         } finally {
             setLoading(false);

@@ -11,7 +11,7 @@ export default function RootLayout() {
             <ApplicationProvider {...eva} theme={eva.light}>
                 <Stack>
                     <Stack.Screen name="index" options={{headerShown: false}}/>
-                    <Stack.Screen name="connecting/index" options={{headerShown: false}}/>
+                    <Stack.Screen name="home/index" options={{headerShown: false}}/>
                 </Stack>
             </ApplicationProvider>
         </>

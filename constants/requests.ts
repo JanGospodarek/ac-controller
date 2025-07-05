@@ -1,3 +1,6 @@
+import {getApiUrl} from "@/utils/getApiUrl";
+import {ResposeStatus} from "@/enums/common";
+
 export interface Request {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     url: string;
@@ -7,9 +10,17 @@ export interface Request {
 
 export type RequestFn = (params?: any) => Request;
 
-const pingServer = () => {
-    return {
-        method: 'GET',
-        url: '/api/ping',
-    };
+export type RequestResponse<T = any> = {
+    data: T;
+    status: ResposeStatus;
+    statusText: string;
 }
+
+export const requests: Record<string, RequestFn> = {
+    pingServer: () =>
+        ({
+            method: 'GET',
+            url: getApiUrl('/api/ping'),
+        })
+}
+
